@@ -1,30 +1,52 @@
 <template>
     <header>
-        <div class="text-menu">
-            <span class="text-menu__item text-menu__item--selected">Товары</span>
-            <span class="text-menu__item">Мои заказы</span>
-        </div>
-        <div class="icons-menu">
-            <span class="text-menu__item text-menu__item--selected">Товары</span>
-            <span class="text-menu__item">Мои заказы</span>
-        </div>
+        <template>
+            <v-bottom-navigation
+                v-model="pageIndex"
+                dark
+                shift
+            >
+                <v-btn>
+                    <span>Video</span>
+
+                    <v-icon>mdi-television-play</v-icon>
+                </v-btn>
+
+                <v-btn>
+                    <span>Music</span>
+
+                    <v-icon>mdi-music-note</v-icon>
+                </v-btn>
+
+                <v-btn>
+                    <span>Book</span>
+
+                    <v-icon>mdi-book</v-icon>
+                </v-btn>
+
+                <v-btn>
+                    <span>Image</span>
+
+                    <v-icon>mdi-image</v-icon>
+                </v-btn>
+            </v-bottom-navigation>
+        </template>
     </header>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapState } = createNamespacedHelpers('paginationModules')
+
 export default {
-    name: "Header"
+    name: "Header",
+    computed: {
+        ...mapState(['pageIndex'])
+    }
 }
 </script>
 
 <style scoped>
-header {
-    height: 60px;
-    width: 100%;
-    border-bottom: antiquewhite solid 1px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
 
 </style>

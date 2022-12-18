@@ -1,5 +1,8 @@
 <template>
-
+    <div>
+        <Header></Header>
+        Bucket
+    </div>
 </template>
 
 <script>

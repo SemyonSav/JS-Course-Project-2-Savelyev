@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import productsModules from './modules/products';
 import VuexPersistence from "vuex-persist";
+import paginationModules from './modules/pagination'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,6 @@ const vuexLocal = new VuexPersistence({
 export default new Vuex.Store({
     plugins: [vuexLocal.plugin],
     modules: {
-        productsModules
+        productsModules, paginationModules
     }
 });

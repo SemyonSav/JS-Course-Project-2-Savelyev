@@ -1,5 +1,8 @@
 <template>
-
+    <div>
+        <Header></Header>
+        Orders
+    </div>
 </template>
 
 <script>
