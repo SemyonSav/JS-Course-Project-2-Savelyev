@@ -3,7 +3,7 @@ const {VueLoaderPlugin} = require("vue-loader");
 
 
 module.exports = {
-    entry: path.join(__dirname, 'index.js'),
+    entry: path.join(__dirname, 'src', 'index.js'),
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '/dist/',
@@ -14,6 +14,20 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
+            },
+            {
+                test: /\.s(c|a)ss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        // Requires sass-loader@^7.0.0
+                        options: {
+                            implementation: require('sass'),
+                            indentedSyntax: true // optional
+                        },
+                    }]
             },
             {
                 test: /\.css$/,
