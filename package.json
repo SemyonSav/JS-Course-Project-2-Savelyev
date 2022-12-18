@@ -7,9 +7,10 @@
   "license": "MIT",
   "scripts": {
     "watch": "webpack-dev-server --hot --open",
-    "build": "webpack"
+    "build": "webpack --mode production"
   },
   "dependencies": {
+    "vercel": "^28.9.0",
     "vue": "^2.6.11",
     "vuex": "^3.0.0",
     "webpack-node-externals": "^3.0.0"
