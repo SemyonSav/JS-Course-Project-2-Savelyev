@@ -1,6 +1,0 @@
-workspace.xml
-node_modules
-.idea/
-junit.xml
-vue/build
-.vercel
