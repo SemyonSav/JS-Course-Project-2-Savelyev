@@ -1,12 +1,12 @@
 <template>
     <v-card
-        :loading="loading"
-        class="mx-auto my-12"
+        class="mx-auto my-12 card"
         max-width="374"
+        @click="openProduct($event)"
     >
         <template slot="progress">
             <v-progress-linear
-                color="deep-purple"
+                color="#673AB7"
                 height="10"
                 indeterminate
             ></v-progress-linear>
@@ -14,19 +14,22 @@
 
         <v-img
             height="250"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+            :src="product.img"
         ></v-img>
 
-        <v-card-title>Футболка "Я панк"</v-card-title>
+        <v-card-title>
+            {{ product.name }}
+        </v-card-title>
 
         <v-card-text>
             <v-row
                 align="center"
                 class="mx-0"
+                style="margin: -15px 0 5px 0"
             >
                 <v-rating
-                    :value="4.5"
-                    color="amber"
+                    :value="product.rating"
+                    color="#FFC107"
                     dense
                     half-increments
                     readonly
@@ -34,15 +37,17 @@
                 ></v-rating>
 
                 <div class="grey--text ms-4">
-                    4.5 (413)
+                    {{ product.rating }} ({{ product.votes }})
                 </div>
             </v-row>
 
             <div class="my-4 text-subtitle-1">
-                @ • H$M
+                • {{ product.author }}
             </div>
 
-            <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+            <div>
+                {{ product.shortDescription }}
+            </div>
         </v-card-text>
 
         <v-divider class="mx-4"></v-divider>
@@ -55,21 +60,22 @@
                 active-class="deep-purple accent-4 white--text"
                 column
             >
-                <v-chip>S</v-chip>
+                <v-chip class="chip">S</v-chip>
 
-                <v-chip>M</v-chip>
+                <v-chip class="chip">M</v-chip>
 
-                <v-chip>L</v-chip>
+                <v-chip class="chip">L</v-chip>
 
-                <v-chip>XL</v-chip>
+                <v-chip class="chip">XL</v-chip>
             </v-chip-group>
         </v-card-text>
 
         <v-card-actions>
             <v-btn
-                color="deep-purple lighten-2"
+                class="order-btn"
+                color="#9575CD"
                 text
-                @click="reserve"
+                @click="addToBucket"
             >
                 Заказать
             </v-btn>
@@ -78,18 +84,34 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapActions } = createNamespacedHelpers('productsModules');
+
+
 export default {
     name: 'ProductCard',
     data: () => ({
-        loading: false,
         selection: 1,
     }),
     methods: {
-        reserve () {
-            this.loading = true;
-            setTimeout(() => (this.loading = false), 2000);
+        ...mapActions(['setOpenedProductIDAction']),
+        openProduct(event) {
+            if (event.target.className !== 'v-btn__content' && event.target.classList[0]
+                !== 'chip' && event.target.className !== 'v-chip__content') {
+                this.setOpenedProductIDAction(this.product.id);
+            }
         },
+        addToBucket() {
+            this.$store.dispatch('bucketModules/addToBucketAction', this.product.id);
+        }
     },
+    props: {
+        product: {
+            type: Object,
+            required: true
+        }
+    }
 };
 </script>
 

@@ -2,17 +2,19 @@ import VuexPersistence from 'vuex-persist';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import productsModules from './modules/products';
+import bucketModules from './modules/bucket'
 import paginationModules from './modules/pagination';
 
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
-    reducer: state => ({ productsModules: state.productsModules }),
+    storage: window.localStorage,
+    reducer: state => ({ bucketModules: state.bucketModules }),
 });
 
 export default new Vuex.Store({
     plugins: [vuexLocal.plugin],
     modules: {
-        productsModules, paginationModules,
+        productsModules, paginationModules, bucketModules
     },
 });
