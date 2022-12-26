@@ -4,20 +4,12 @@
         max-width="374"
         @click="openProduct($event)"
     >
-        <template slot="progress">
-            <v-progress-linear
-                color="#673AB7"
-                height="10"
-                indeterminate
-            ></v-progress-linear>
-        </template>
-
         <v-img
             height="250"
             :src="product.img"
         ></v-img>
 
-        <v-card-title>
+        <v-card-title class="card__title">
             {{ product.name }}
         </v-card-title>
 
@@ -56,6 +48,7 @@
 
         <v-card-text>
             <v-chip-group
+                class="chips"
                 v-model="selection"
                 active-class="deep-purple accent-4 white--text"
                 column
@@ -103,18 +96,38 @@ export default {
             }
         },
         addToBucket() {
-            this.$store.dispatch('bucketModules/addToBucketAction', this.product.id);
-        }
+            try {
+                if (JSON.parse(window.localStorage.vuex).bucketModules.bucket.filter(product => product.id === this.product.id).length === 0) {
+                    this.$store.dispatch('bucketModules/addToBucketAction', this.product.id);
+                    alert('Товар добавлен в корзину');
+                } else {
+                    alert('Товар уже в корзине');
+                }
+            } catch (err) {
+                this.$store.dispatch('bucketModules/addToBucketAction', this.product.id);
+                alert('Товар добавлен в корзину');
+            }
+        },
     },
     props: {
         product: {
             type: Object,
-            required: true
-        }
-    }
+            required: true,
+        },
+    },
 };
 </script>
 
 <style scoped>
+    .order-btn {
+        margin-top: -10px;
+    }
 
+    .chips {
+        margin-top: -10px;
+    }
+
+    .card__title {
+        margin-top: -7px;
+    }
 </style>

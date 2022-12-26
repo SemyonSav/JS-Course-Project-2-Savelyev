@@ -36,31 +36,31 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import Header from '../components/Header';
-import ProductCard from "../components/ProductCard";
-import ProductExpanseCard from "../components/ProductExpanseCard";
+import ProductCard from '../components/ProductCard';
+import ProductExpanseCard from '../components/ProductExpanseCard';
 
 const { mapState, mapActions } = createNamespacedHelpers('productsModules');
 
 export default {
     name: 'ProductsPage',
-    components: {ProductExpanseCard, ProductCard, Header },
+    components: { ProductExpanseCard, ProductCard, Header },
     data() {
         return {
-            searchText: "",
+            searchText: '',
         };
     },
     computed: {
         ...mapState(['products', 'openedProductID']),
         isProductOpened() {
             return this.openedProductID !== -1;
-        }
+        },
     },
     methods: {
         ...mapActions(['setOpenedProductIDAction']),
         closeProduct() {
             this.setOpenedProductIDAction(-1);
-        }
-    }
+        },
+    },
 };
 </script>
 

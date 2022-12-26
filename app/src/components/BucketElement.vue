@@ -1,7 +1,7 @@
 <template>
     <v-card class="card">
         <img
-            src="https://storage.vsemayki.ru/images/0/1/1913/1913759/previews/people_7_manshort_front_white_500.jpg"
+            :src="product.img"
             class="card__img"
         >
         <div class="card__info">
@@ -9,7 +9,7 @@
                 {{ product.name }}
             </h2>
             <p class="card__info--text">
-                Здесь бля должно быть ёпте короткое описание товара
+                {{ product.shortDescription }}
             </p>
         </div>
         <v-spacer></v-spacer>
@@ -21,13 +21,16 @@
                 dark
                 small
                 color="#673AB7"
+                @click="minusCountInBucket"
             >
                 <v-icon dark>
                     mdi-minus
                 </v-icon>
             </v-btn>
 
-            <h3 class="count">3</h3>
+            <h3 class="count">
+                {{ productCount }}
+            </h3>
 
             <v-btn
                 class="mx-2"
@@ -35,6 +38,7 @@
                 dark
                 small
                 color="#673AB7"
+                @click="plusCountInBucket"
             >
                 <v-icon dark>
                     mdi-plus
@@ -45,6 +49,7 @@
                 class="delete-btn"
                 color="#673AB7"
                 elevation="2"
+                @click="deleteFromBucket"
             >
                 Удалить
             </v-btn>
@@ -54,47 +59,71 @@
 
 <script>
 export default {
-    name: "BucketElement",
-    data() {
-        return {
-            product: this.$store.state.productsModules.products.filter(product => product.id === this.bucketProduct.id)[0]
-        }
-    },
+    name: 'BucketElement',
     props: {
         bucketProduct: {
             type: Object,
-            required: true
-        }
-    }
-}
+            required: true,
+        },
+    },
+    computed: {
+        product() {
+            return this.$store.state.productsModules.products.filter(prod => prod.id === this.bucketProduct.id)[0];
+        },
+        productCount() {
+            return this.$store.state.bucketModules.bucket.filter(prod => prod.id === this.bucketProduct.id)[0].count;
+        },
+    },
+    methods: {
+        deleteFromBucket() {
+            this.$store.dispatch('bucketModules/removeFromBucketAction', this.bucketProduct.id);
+        },
+        plusCountInBucket() {
+            this.$store.dispatch('bucketModules/changeCountInBucketAction', {
+                id: this.bucketProduct.id,
+                count: 1,
+            });
+        },
+        minusCountInBucket() {
+            if (this.$store.state.bucketModules.bucket.filter(prod => prod.id === this.bucketProduct.id)[0].count !== 1) {
+                this.$store.dispatch('bucketModules/changeCountInBucketAction', {
+                    id: this.bucketProduct.id,
+                    count: -1,
+                });
+            } else {
+                this.$store.dispatch('bucketModules/removeFromBucketAction', this.bucketProduct.id);
+            }
+        },
+    },
+};
 </script>
 
 <style scoped>
-    .card {
-        display: flex;
-        padding: 10px 15px;
-        height: 150px;
-        width: 100%;
-    }
+.card {
+    display: flex;
+    padding: 10px 15px;
+    height: 150px;
+    width: 100%;
+}
 
-    .card__img {
-        height: 130px;
-    }
+.card__img {
+    height: 130px;
+}
 
-    .card__info {
-        margin-left: 10px;
-        width: 200px;
-    }
+.card__info {
+    margin-left: 10px;
+    width: 200px;
+}
 
-    .card__info--text {
-        margin-top: 10px;
-    }
+.card__info--text {
+    margin-top: 10px;
+}
 
-    .delete-btn {
-        margin-left: 30px;
-    }
+.delete-btn {
+    margin-left: 30px;
+}
 
-    .count {
-        margin: 0 20px;
-    }
+.count {
+    margin: 0 20px;
+}
 </style>

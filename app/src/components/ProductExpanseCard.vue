@@ -28,23 +28,52 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-            <v-btn color="#673AB7">В корзину</v-btn>
+            <v-btn
+                color="#673AB7"
+                @click="addToBucket"
+            >
+                В корзину
+            </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="#607D8B">Удалить из корзины</v-btn>
+            <v-btn
+                color="#607D8B"
+                @click="removeFromBucket"
+            >
+                Удалить из корзины
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
 export default {
-    name: "ProductExpanseCard",
+    name: 'ProductExpanseCard',
     props: {
         product: {
             type: Object,
-            required: true
-        }
-    }
-}
+            required: true,
+        },
+    },
+    methods: {
+        addToBucket() {
+            try {
+                if (JSON.parse(window.localStorage.vuex).bucketModules.bucket.filter(product => product.id === this.product.id).length === 0) {
+                    this.$store.dispatch('bucketModules/addToBucketAction', this.product.id);
+                    alert('Товар добавлен в корзину');
+                } else {
+                    alert('Товар уже в корзине');
+                }
+            } catch (err) {
+                this.$store.dispatch('bucketModules/addToBucketAction', this.product.id);
+                alert('Товар добавлен в корзину');
+            }
+        },
+        removeFromBucket() {
+            this.$store.dispatch('bucketModules/removeFromBucketAction', this.product.id);
+            alert('Товар удалён');
+        },
+    },
+};
 </script>
 
 <style scoped>
