@@ -1,21 +1,33 @@
-# project2
+## Project 2 Vue
 
-> A Vue.js project
+### Описание
 
-## Build Setup
+Интернет-магазин одежды.
+
+На главной странице представлен каталог товаров.
+При нажатии на карточку товара открывается расширенное описание с возможностью добавления и удаления из корзины.
+
+На странице "Корзина" есть возможность изменять количество товаров и удалять их.
+При нажатии на кнопку "Заказать", товары перейдут во вкладку заказы, если заполнен профиль.
+
+На странице "Заказы" представлена история сделанных заказов.
+При нажатии на карточку заказа можно посмотреть описание товара. Историю заказов можно очистить.
+
+На странице "Профиль" необходимо заполнить персональные, чтобы совершать заказы.
+
+### Технологии
+
+JavaScript, HTML, CSS, Webpack, Vue.js 2, Vuex, Vue-Router, Uuid, Eslint, Vuetify, Vercel.
+
+### Как запустить
 
 ``` bash
 # install dependencies
-npm install
+yarn install
 
 # serve with hot reload at localhost:8080
-npm run dev
+yarn start
 
 # build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+yarn build
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
