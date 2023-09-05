@@ -31,3 +31,7 @@ yarn start
 # build for production with minification
 yarn build
 ```
+
+
+Деплой сайта на Vercel:
+https://js-course-project-2vue-savelyev.vercel.app/
